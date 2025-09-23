@@ -1,0 +1,329 @@
+.cart-menu .nav li button.active {
+    border-radius: 0;
+    color: #E4002B;
+}
+
+.cart-menu .nav li {
+    width: 50%;
+    float: left;
+}
+
+.cart-menu .nav li button 
+{
+    margin: 0;
+    padding: 12px 0;
+    display: block;
+    width: 100%;
+    color: #222;
+}  
+
+
+/*@media only screen and (min-width:767px) */
+/*{*/
+    .cart-menu 
+    {
+        display: none;
+    }
+/*}*/
+
+/*@media only screen and (min-width:320px) and (max-width:767px) {*/
+    .cart-menu.active 
+    {
+        display: block;
+        right: 0;
+        
+    }
+
+    .cart-menu 
+    {
+        width: 340px;
+        right: -300px;
+        position: fixed;
+        top: 0;
+        z-index: 99999;
+        background-color: #c90909;
+        height: 100vh;
+        transition: all 0.3s ease;
+        overflow-y: auto;
+    }
+    
+    
+    .cart-menu::-webkit-scrollbar-track
+    {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: #b11010;
+    }
+
+    .cart-menu::-webkit-scrollbar {
+        width: 6px;
+        background-color: #ee2828;
+    }
+
+    .cart-menu::-webkit-scrollbar-thumb {
+        background-color: #fe5200;
+    }
+
+
+    .mobile-menu-logo {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #ddd;
+        padding: 10px 15px;
+    }
+
+    .mobile-menu-close {
+        height: 40px;
+        width: 40px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .mobile-menu-close i {
+        font-size: 22px;
+    }
+
+
+    .cart-menu li.parent-category {
+        position: relative;
+    }
+
+    .cart-menu span.menu-category-toggle {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        display: flex;
+        width: 50px;
+        height: 50px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .cart-menu span.menu-category-toggle.active i 
+    {
+        transition: transform 0.5s ease;
+    }
+
+    .cart-menu span.menu-category-toggle.active i 
+    {
+        transform: rotate(180deg);
+    }
+
+
+    .mobile-menu-social .mobile-social-list .mobile-social-link i 
+    {
+        color: #c0c0c0;
+        font-size: 16px;
+    }
+
+    .mobile-menu-social .mobile-social-list .mobile-social-link 
+    {
+        border: 2px solid #c0c0c0;
+        padding: 5px 13px;
+        border-radius: 5px;
+        display: block;
+    }
+
+    .mobile-menu-social .cart-menu-social 
+    {
+        display: flex;
+        column-gap: 5px;
+        padding-left: 20px;
+    }
+
+.first-nav .parent-category {
+    display: block;
+    line-height: 33px;
+}
+.first-nav .menu-category-list {
+    display: block;
+}
+.first-nav .menu-category-list .menu-category-link {
+    padding: 10px 0;
+    display: block;
+    padding-left: 20px;
+}
+.first-nav .parent-category .menu-category-name {
+    display: block;
+    padding: 10px;
+    padding-left: 20px;
+    text-transform: capitalize;
+    font-weight: 600;
+    color: #222;
+}
+
+
+.second-nav {
+    padding: 0 0px;
+    background-color: #fff;
+}
+.second-nav.active {
+    min-height: 15px;
+}
+.parent-subcategory {
+    display: block;
+    position: relative;
+    padding: 0px;
+}
+.parent-subcategory .menu-subcategory-name {
+    display: block;
+    padding: 10px;
+    padding-left: 40px;
+}
+span.menu-subcategory-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+}
+span.menu-subcategory-toggle.active i {
+    transition: transform 0.3s ease;
+}
+span.menu-subcategory-toggle.active i {
+    transform: rotate(180deg);
+}
+li.childcategory {
+    display: block;
+}
+ul.third-nav {
+    padding: 0;
+    background-color: #f2f2f2;
+}
+li.parent-category.active {
+    background-color: rgba(0, 0, 0, .05);
+}
+li.parent-subcategory.active {
+    background-color: #fff;
+}
+.menu-childcategory-name 
+{
+    display: block;
+    padding: 10px 0;
+    padding-left: 60px;
+}
+
+
+
+/*}*/
+
+/*Inside CartBox*/
+
+.cart-item-list {
+    padding: 0px 20px 30px;
+    overflow: auto;
+    height: 350px;
+}
+
+
+.cart-item-list .cart-item-details .cart-item-description 
+{
+    display: --webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    --webkit-box-align: center;
+    --ms-flex-align: center;
+    --webkit-box-align: center;
+    --ms-flex-align: center;
+    align-items: center;
+}
+
+.cart-buttons {
+    padding: 20px;
+}
+
+
+.cart-buttons .cart-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.cart-buttons .cart-price span {
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+}
+.cart-buttons .cart-price p {
+    font-size: 16px;
+    font-weight: 400;
+    color: black;
+}
+
+.cart-buttons .cart-price span {
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+}
+
+.default_btn {
+    color: whitesmoke;
+    background-color: #E4002B !important;
+}
+
+.default_btn:hover {
+    color: black;
+    background-color: wheat !important;
+}
+.btns {
+    font-size: 14px;
+    border: none;
+    font-weight: 600;
+    padding: 12px 35px;
+    border-radius: 50px;
+    --webkit-border-radius: 4px;
+}
+
+.load_more_btn {
+    color: green;
+    background-color: whitesmoke;
+    border: 2px solid  green;
+    --webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+
+}
+
+
+
+.cart__empty-text
+{
+    text-align: center;
+    opacity: 0.9;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+}
+
+.continue-shop-btn
+{
+    background: #016938;
+    color: #efe4e4 ;
+    padding: 10px 30px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.cart__login-title
+{
+    text-align: center;
+    letter-spacing: 0.2px;
+    font-weight: 300;
+    color: #342c2c;
+}
+
+.cart__login-paragraph,  .cart__login-paragraph a
+{
+    font-size: 1.1rem;
+    color: #51515b;
+}
+
+.cart__login-paragraph a:hover
+{
+    font-weight: 500;
+}
+
+
