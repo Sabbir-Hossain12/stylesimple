@@ -1,11 +1,18 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\Category;
 use App\Models\CreatePage;
 use App\Models\Customer;
 use App\Models\GeneralSetting;
+use App\Models\Product;
+use App\Models\Productcolor;
+use App\Models\Productsize;
+use App\Models\ShippingCharge;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Response;
@@ -14,6 +21,7 @@ use Auth;
 use Mail;
 use Str;
 use DB;
+
 class FrontendController extends Controller
 {
     public function userRegister(Request $request)
@@ -51,7 +59,7 @@ class FrontendController extends Controller
             } else {
                 $user = new Customer();
                 $user->name = $request->name;
-                $user->slug = Str::slug($request->name.'-'.$request->phone);
+                $user->slug = Str::slug($request->name . '-' . $request->phone);
                 $user->email = $request->email;
                 $user->phone = $request->phone;
                 $user->password = Hash::make($request->password);
@@ -59,7 +67,6 @@ class FrontendController extends Controller
                 $success = $user->save();
             }
         }
-
 
 
         if ($success) {
@@ -237,7 +244,7 @@ class FrontendController extends Controller
     //sliders
     public function sliders()
     {
-        $sliders = Banner::where('category_id',1)->select('id','video','link')->get();
+        $sliders = Banner::where('category_id', 1)->select('id', 'video', 'link')->get();
 
         return response()->json([
             'status' => true,
@@ -248,7 +255,7 @@ class FrontendController extends Controller
 
     public function bigBanner()
     {
-        $banner = Banner::where('category_id',2)->select('id','image','link','text')->first();
+        $banner = Banner::where('category_id', 2)->select('id', 'image', 'link', 'text')->first();
 
         return response()->json([
             'status' => true,
@@ -259,7 +266,7 @@ class FrontendController extends Controller
 
     public function smallBanner()
     {
-        $banner = Banner::where('category_id',3)->select('id','image','link','text')->first();
+        $banner = Banner::where('category_id', 3)->select('id', 'image', 'link', 'text')->first();
 
         return response()->json([
             'status' => true,
@@ -270,15 +277,171 @@ class FrontendController extends Controller
 
     public function pages()
     {
-        $pages = CreatePage::where('status',1)->select('name','slug','title','description','status')->get();
+        $pages = CreatePage::where('status', 1)->select('name', 'slug', 'title', 'description', 'status')->get();
 
-            return response()->json([
-                'status' => true,
-                'message' => 'Pages',
-                'data' => $pages,
-            ], 200);
+        return response()->json([
+            'status' => true,
+            'message' => 'Pages',
+            'data' => $pages,
+        ], 200);
     }
 
+    public function shopProducts()
+    {
+        $products = Product::where('status', 1)
+            ->select('id', 'name', 'slug', 'new_price', 'old_price')
+            ->with('images')
+            ->paginate(16);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Products',
+            'data' => $products,
+        ], 200);
+    }
+
+    public function featuredCategories()
+    {
+        $featuredCategories = Category::where('status', 1)
+            ->where('isFeatured', 1)
+            ->select('id', 'name', 'slug', 'image', 'status')->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Featured Categories',
+            'data' => $featuredCategories,
+        ], 200);
+    }
+
+    public function navCategories()
+    {
+        $navCategories = Category::where('status', 1)
+            ->where('isNew', 1)
+            ->select('id', 'name', 'slug', 'image', 'status')->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Navbar Categories',
+            'data' => $navCategories,
+        ], 200);
+    }
+
+    public function shopCategories()
+    {
+        $shopCategories = Category::where('status', 1)
+            ->select('id', 'name', 'slug', 'image', 'status')
+            ->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Shop Categories',
+            'data' => $shopCategories,
+        ], 200);
+    }
+
+    public function searchProducts(Request $request)
+    {
+        $keyword = $request->input('keyword');
+
+        $products = Product::where('status', 1)
+            ->where('name', 'LIKE', "%{$keyword}%")
+            ->select('id', 'name', 'slug', 'new_price', 'old_price')
+            ->with('images')
+            ->paginate(16);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Search Result for "' . $keyword . '"',
+            'data' => $products,
+        ], 200);
+    }
+
+    public function subscription(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'string|email|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation Failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $email = $request->input('email');
+
+        $subscription = Subscription::create([
+            'email' => $email,
+            'status' => 1,
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Subscription created successfully',
+            'data' => $subscription,
+        ], 200);
+    }
+
+    public function productsByCategory(string $slug)
+    {
+        $category = Category::where('slug', $slug)->first();
+
+        $products = Product::where('status', 1)
+            ->where('category_id', $category->id)
+            ->select('id', 'name', 'slug', 'new_price', 'old_price')
+            ->with('images')
+            ->paginate(16);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Products for Category "' . $category->name . '"',
+            'data' => $products,
+        ], 200);
+    }
+
+    public function frontCategories()
+    {
+        $categories = Category::where('status', 1)
+            ->where('front_view',1)
+            ->select('id', 'name', 'slug', 'image', 'status')
+            ->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Front Categories',
+            'data' => $categories,
+        ], 200);
+    }
+
+    public function productDetails(string $slug)
+    {
+        $details = Product::where(['slug' => $slug, 'status' => 1])
+            ->with('image', 'images', 'category', 'subcategory', 'childcategory')
+            ->firstOrFail();
+
+        $shippingCharge = ShippingCharge::where('status', 1)->get();
+
+        $productColors = Productcolor::where('product_id', $details->id)
+            ->with('color')
+            ->get();
+
+        $productSizes = Productsize::where('product_id', $details->id)
+            ->with('size')
+            ->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Product Details',
+            'data' => [
+                'product' => $details,
+                'shippingCharge' => $shippingCharge,
+                'productColors' => $productColors,
+                'productSizes' => $productSizes,
+            ],
+        ], 200);
+    }
 }
 
 

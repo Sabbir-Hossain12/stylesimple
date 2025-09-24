@@ -17,13 +17,18 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('slug');
-            $table->integer('category_id'); 
+            $table->foreignId('category_id');
             $table->integer('brand_id')->nullable();
+            $table->integer('subcategory_id')->nullable();
+            $table->integer('childcategory_id')->nullable();
+
+
             $table->string('product_code')->unique();
             $table->integer('purchase_price');
             $table->integer('old_price')->nullable();
             $table->integer('new_price');
             $table->integer('stock');
+
             $table->text('meta_description')->nullable();
             $table->text('description')->nullable();
             $table->tinyInteger('topsale')->nullable();

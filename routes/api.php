@@ -25,6 +25,21 @@ Route::name('api.')->group(function () {
 
     Route::get('/pages',[FrontendController::class, 'pages'])->name('user.pages');
 
+    //Subscription
+    Route::post('/subscription', [FrontendController::class, 'subscription'])->name('user.subscription');
+
+    //Categories
+    Route::get('/featured-categories', [FrontendController::class, 'featuredCategories'])->name('user.front-categories');
+    Route::get('/nav-categories', [FrontendController::class, 'navCategories'])->name('user.nav-categories');
+    Route::get('/shop-categories', [FrontendController::class, 'shopCategories'])->name('user.shop-categories');
+    Route::get('/front-categories', [FrontendController::class, 'frontCategories'])->name('user.front-categories');
+
+    //Products
+    Route::get('/shop-products/', [FrontendController::class, 'shopProducts'])->name('user.shop-products');
+    Route::get('/search-products/{keyword?}', [FrontendController::class, 'searchProducts'])->name('user.search-products');
+    Route::get('/products-by-category/{slug}', [FrontendController::class, 'productsByCategory'])->name('user.products-by-category');
+//  Route::get('/front-category-products/{slug}', [FrontendController::class, 'frontCategoryProducts'])->name('user.front-category-products');
+    Route::get('/product-details/{slug}', [FrontendController::class, 'productDetails'])->name('user.product-details');
 });
 
 Route::middleware('auth:sanctum')->group(function () {
