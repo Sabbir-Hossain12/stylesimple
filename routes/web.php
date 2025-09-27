@@ -67,11 +67,11 @@ Route::group(['namespace'=>'Frontend', 'middleware' => ['ipcheck','check_refer']
     Route::get('feature-products', [FrontendController::class, 'featureProducts'])->name('featureproducts');
     Route::get('/new-collection', [FrontendController::class, 'newCollection'])->name('newcollection');
     Route::get('/featured-collection', [FrontendController::class, 'featuredCollection'])->name('featuredcollection');
-    
-    
+
+
     Route::get('livesearch', [FrontendController::class, 'livesearch'])->name('livesearch');
     Route::get('search', [FrontendController::class, 'search'])->name('search');
-    Route::get('product/{id}', [FrontendController::class, 'details'])->name('product');    
+    Route::get('product/{id}', [FrontendController::class, 'details'])->name('product');
     Route::get('quick-view', [FrontendController::class, 'quickview'])->name('quickview');
     Route::get('/shipping-charge', [FrontendController::class, 'shipping_charge'])->name('shipping.charge');
     Route::get('site/contact-us', [FrontendController::class, 'contact'])->name('contact');
@@ -85,8 +85,8 @@ Route::group(['namespace'=>'Frontend', 'middleware' => ['ipcheck','check_refer']
     // cart route
     Route::post('cart/store', [ShoppingController::class, 'cart_store'])->name('cart.store');
     Route::post('cart/store2', [ShoppingController::class, 'cart_store2'])->name('cart.store2');
-    
-    
+
+
     Route::get('/add-to-cart/{id}/{qty}', [ShoppingController::class, 'addTocartGet']);
 
     Route::get('shop/cart', [ShoppingController::class, 'cart_show'])->name('cart.show');
@@ -120,14 +120,13 @@ Route::group(['prefix'=>'customer','namespace'=>'Frontend', 'middleware' => ['ip
 
    Route::get('/order-track', [CustomerController::class, 'order_track'])->name('customer.order_track');
     Route::get('/order-track/result', [CustomerController::class, 'order_track_result'])->name('customer.order_track_result');
-    
 
 });
 // customer auth
 Route::group(['prefix'=>'customer','namespace'=>'Frontend','middleware' => ['customer','ipcheck','check_refer']], function() {
-    
+
     Route::get('/account', [CustomerController::class, 'account'])->name('customer.account');
-    
+
     Route::get('/orders', [CustomerController::class, 'orders'])->name('customer.orders');
     Route::get('/invoice', [CustomerController::class, 'invoice'])->name('customer.invoice');
     Route::get('/invoice/order-note', [CustomerController::class, 'order_note'])->name('customer.order_note');
@@ -135,11 +134,11 @@ Route::group(['prefix'=>'customer','namespace'=>'Frontend','middleware' => ['cus
     Route::post('/profile-update', [CustomerController::class, 'profile_update'])->name('customer.profile_update');
     Route::get('/change-password', [CustomerController::class, 'change_pass'])->name('customer.change_pass');
     Route::post('/password-update', [CustomerController::class, 'password_update'])->name('customer.password_update');
-    
+
 });
 
 Route::group(['namespace'=>'Frontend', 'middleware' => ['ipcheck','check_refer']], function() {
-    
+
     Route::get('bkash/checkout-url/pay',[BkashController::class,'pay'])->name('url-pay');
 Route::any('bkash/checkout-url/create',[BkashController::class,'create'])->name('url-create');
 Route::get('bkash/checkout-url/callback',[BkashController::class,'callback'])->name('url-callback');
@@ -164,7 +163,7 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::get('change-password', [DashboardController::class, 'changepassword'])->name('change_password');
     Route::post('new-password', [DashboardController::class, 'newpassword'])->name('new_password');
 
-    // users route 
+    // users route
     Route::get('users/manage', [UserController::class,'index'])->name('users.index');
     Route::get('users/create', [UserController::class,'create'])->name('users.create');
     Route::post('users/save', [UserController::class,'store'])->name('users.store');
@@ -173,7 +172,7 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('users/inactive', [UserController::class,'inactive'])->name('users.inactive');
     Route::post('users/active', [UserController::class,'active'])->name('users.active');
     Route::post('users/destroy', [UserController::class,'destroy'])->name('users.destroy');
-    
+
     // roles
     Route::get('roles/manage', [RoleController::class,'index'])->name('roles.index');
     Route::get('roles/{id}/show', [RoleController::class,'show'])->name('roles.show');
@@ -224,15 +223,15 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('childcategories/inactive', [ChildcategoryController::class,'inactive'])->name('childcategories.inactive');
     Route::post('childcategories/active', [ChildcategoryController::class,'active'])->name('childcategories.active');
     Route::post('childcategories/destroy', [ChildcategoryController::class,'destroy'])->name('childcategories.destroy');
-    
+
      // paymentgeteway
     Route::get('paymentgeteway/manage', [ApiIntegrationController::class,'pay_manage'])->name('paymentgeteway.manage');
     Route::post('paymentgeteway/save', [ApiIntegrationController::class,'pay_update'])->name('paymentgeteway.update');
-    
+
      // smsgeteway
     Route::get('smsgeteway/manage', [ApiIntegrationController::class,'sms_manage'])->name('smsgeteway.manage');
     Route::post('smsgeteway/save', [ApiIntegrationController::class,'sms_update'])->name('smsgeteway.update');
-    
+
     // courierapi
     Route::get('courierapi/manage', [ApiIntegrationController::class,'courier_manage'])->name('courierapi.manage');
     Route::post('courierapi/save', [ApiIntegrationController::class,'courier_update'])->name('courierapi.update');
@@ -247,7 +246,7 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('orderstatus/inactive', [OrderStatusController::class,'inactive'])->name('orderstatus.inactive');
     Route::post('orderstatus/active', [OrderStatusController::class,'active'])->name('orderstatus.active');
     Route::post('orderstatus/destroy', [OrderStatusController::class,'destroy'])->name('orderstatus.destroy');
-    
+
     // pixels
     Route::get('pixels/manage', [PixelsController::class,'index'])->name('pixels.index');
     Route::get('pixels/{id}/show', [PixelsController::class,'show'])->name('pixels.show');
@@ -258,7 +257,7 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('pixels/inactive', [PixelsController::class,'inactive'])->name('pixels.inactive');
     Route::post('pixels/active', [PixelsController::class,'active'])->name('pixels.active');
     Route::post('pixels/destroy', [PixelsController::class,'destroy'])->name('pixels.destroy');
-    
+
      // tag manager
     Route::get('tag-manager/manage', [TagManagerController::class,'index'])->name('tagmanagers.index');
     Route::get('tag-manager/{id}/show', [TagManagerController::class,'show'])->name('tagmanagers.show');
@@ -269,7 +268,7 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('tag-manager/inactive', [TagManagerController::class,'inactive'])->name('tagmanagers.inactive');
     Route::post('tag-manager/active', [TagManagerController::class,'active'])->name('tagmanagers.active');
     Route::post('tag-manager/destroy', [TagManagerController::class,'destroy'])->name('tagmanagers.destroy');
-    
+
     // attribute
     Route::get('brands/manage', [BrandController::class,'index'])->name('brands.index');
     Route::get('brands/{id}/show', [BrandController::class,'show'])->name('brands.show');
@@ -291,7 +290,7 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('color/inactive', [ColorController::class,'inactive'])->name('colors.inactive');
     Route::post('color/active', [ColorController::class,'active'])->name('colors.active');
     Route::post('color/destroy', [ColorController::class,'destroy'])->name('colors.destroy');
-    
+
     // size
     Route::get('size/manage', [SizeController::class,'index'])->name('sizes.index');
     Route::get('size/{id}/show', [SizeController::class,'show'])->name('sizes.show');
@@ -302,8 +301,8 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('size/inactive', [SizeController::class,'inactive'])->name('sizes.inactive');
     Route::post('size/active', [SizeController::class,'active'])->name('sizes.active');
     Route::post('size/destroy', [SizeController::class,'destroy'])->name('sizes.destroy');
-   
-   
+
+
     // product
     Route::get('products/manage', [ProductController::class,'index'])->name('products.index');
     Route::get('products/{id}/show', [ProductController::class,'show'])->name('products.show');
@@ -321,7 +320,7 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::get('products/update-status', [ProductController::class,'update_status'])->name('products.update_status');
     Route::get('products/price-edit', [ProductController::class,'price_edit'])->name('products.price_edit');
     Route::post('products/price-update', [ProductController::class,'price_update'])->name('products.price_update');
-    
+
     // campaign
     Route::get('campaign/manage', [CampaignController::class,'index'])->name('campaign.index');
     Route::get('campaign/{id}/show', [CampaignController::class,'show'])->name('campaign.show');
@@ -333,8 +332,8 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('campaign/active', [CampaignController::class,'active'])->name('campaign.active');
     Route::post('campaign/destroy', [CampaignController::class,'destroy'])->name('campaign.destroy');
     Route::get('campaign/image/destroy', [CampaignController::class,'imgdestroy'])->name('campaign.image.destroy');
-   
-    // settings route 
+
+    // settings route
     Route::get('settings/manage', [GeneralSettingController::class,'index'])->name('settings.index');
     Route::get('settings/create', [GeneralSettingController::class,'create'])->name('settings.create');
     Route::post('settings/save', [GeneralSettingController::class,'store'])->name('settings.store');
@@ -344,7 +343,7 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('settings/active', [GeneralSettingController::class,'active'])->name('settings.active');
     Route::post('settings/destroy', [GeneralSettingController::class,'destroy'])->name('settings.destroy');
 
-     // settings route 
+     // settings route
     Route::get('social-media/manage', [SocialMediaController::class,'index'])->name('socialmedias.index');
     Route::get('social-media/create', [SocialMediaController::class,'create'])->name('socialmedias.create');
     Route::post('social-media/save', [SocialMediaController::class,'store'])->name('socialmedias.store');
@@ -354,7 +353,7 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('social-media/active', [SocialMediaController::class,'active'])->name('socialmedias.active');
     Route::post('social-media/destroy', [SocialMediaController::class,'destroy'])->name('socialmedias.destroy');
 
-     // contact route 
+     // contact route
     Route::get('contact/manage', [ContactController::class,'index'])->name('contact.index');
     Route::get('contact/create', [ContactController::class,'create'])->name('contact.create');
     Route::post('contact/save', [ContactController::class,'store'])->name('contact.store');
@@ -364,7 +363,7 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('contact/active', [ContactController::class,'active'])->name('contact.active');
     Route::post('contact/destroy', [ContactController::class,'destroy'])->name('contact.destroy');
 
-     // banner category route 
+     // banner category route
     Route::get('banner-category/manage', [BannerCategoryController::class,'index'])->name('banner_category.index');
     Route::get('banner-category/create', [BannerCategoryController::class,'create'])->name('banner_category.create');
     Route::post('banner-category/save', [BannerCategoryController::class,'store'])->name('banner_category.store');
@@ -374,7 +373,7 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('banner-category/active', [BannerCategoryController::class,'active'])->name('banner_category.active');
     Route::post('banner-category/destroy', [BannerCategoryController::class,'destroy'])->name('banner_category.destroy');
 
-    // banner  route 
+    // banner  route
     Route::get('banner/manage', [BannerController::class,'index'])->name('banners.index');
     Route::get('banner/create', [BannerController::class,'create'])->name('banners.create');
     Route::post('banner/save', [BannerController::class,'store'])->name('banners.store');
@@ -383,8 +382,8 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('banner/inactive', [BannerController::class,'inactive'])->name('banners.inactive');
     Route::post('banner/active', [BannerController::class,'active'])->name('banners.active');
     Route::post('banner/destroy', [BannerController::class,'destroy'])->name('banners.destroy');
-    
-    // contact route 
+
+    // contact route
     Route::get('page/manage', [CreatePageController::class,'index'])->name('pages.index');
     Route::get('page/create', [CreatePageController::class,'create'])->name('pages.create');
     Route::post('page/save', [CreatePageController::class,'store'])->name('pages.store');
@@ -407,7 +406,7 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::get('order/cart-shipping', [OrderController::class,'cart_shipping'])->name('admin.order.cart_shipping');
     Route::get('order/cart-clear', [OrderController::class,'cart_clear'])->name('admin.order.cart_clear');
 
-    // Order route 
+    // Order route
     Route::get('order/{slug}', [OrderController::class,'index'])->name('admin.orders');
     Route::get('order/edit/{invoice_id}', [OrderController::class,'order_edit'])->name('admin.order.edit');
     Route::post('order/update', [OrderController::class,'order_update'])->name('admin.order.update');
@@ -426,7 +425,7 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::get('/pathao-city', [OrderController::class, 'pathaocity'])->name('pathaocity');
     Route::get('/pathao-zone', [OrderController::class, 'pathaozone'])->name('pathaozone');
 
-    // Order route 
+    // Order route
     Route::get('reviews', [ReviewController::class,'index'])->name('reviews.index');
     Route::get('review/pending', [ReviewController::class,'pending'])->name('reviews.pending');
      Route::post('review/inactive', [ReviewController::class,'inactive'])->name('reviews.inactive');
@@ -437,7 +436,7 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('review/update', [ReviewController::class,'update'])->name('reviews.update');
     Route::post('review/destroy', [ReviewController::class,'destroy'])->name('reviews.destroy');
 
-    // flavor  route 
+    // flavor  route
     Route::get('shipping-charge/manage', [ShippingChargeController::class,'index'])->name('shippingcharges.index');
     Route::get('shipping-charge/create', [ShippingChargeController::class,'create'])->name('shippingcharges.create');
     Route::post('shipping-charge/save', [ShippingChargeController::class,'store'])->name('shippingcharges.store');
@@ -446,8 +445,8 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('shipping-charge/inactive', [ShippingChargeController::class,'inactive'])->name('shippingcharges.inactive');
     Route::post('shipping-charge/active', [ShippingChargeController::class,'active'])->name('shippingcharges.active');
     Route::post('shipping-charge/destroy', [ShippingChargeController::class,'destroy'])->name('shippingcharges.destroy');
-    
-    // backend customer route 
+
+    // backend customer route
     Route::get('customer', [CustomerManageController::class,'index'])->name('customers.index');
     Route::get('customer/manage', [CustomerManageController::class,'index'])->name('customers.index');
     Route::get('customer/{id}/edit', [CustomerManageController::class,'edit'])->name('customers.edit');
@@ -460,11 +459,11 @@ Route::group(['namespace'=>'Admin','middleware' => ['auth','lock','check_refer']
     Route::post('customer/ip-store', [CustomerManageController::class,'ipblock_store'])->name('customers.ipblock.store');
     Route::post('customer/ip-update', [CustomerManageController::class,'ipblock_update'])->name('customers.ipblock.update');
     Route::post('customer/ip-destroy', [CustomerManageController::class,'ipblock_destroy'])->name('customers.ipblock.destroy');
-    
-    
+
+
     // Teams Section
 //    Route::resource('/teams', App\Http\Controllers\Admin\TeamController::class)->names('team');
-    
+
 
 });
 

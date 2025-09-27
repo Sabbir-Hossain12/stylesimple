@@ -40,6 +40,13 @@ Route::name('api.')->group(function () {
     Route::get('/products-by-category/{slug}', [FrontendController::class, 'productsByCategory'])->name('user.products-by-category');
 //  Route::get('/front-category-products/{slug}', [FrontendController::class, 'frontCategoryProducts'])->name('user.front-category-products');
     Route::get('/product-details/{slug}', [FrontendController::class, 'productDetails'])->name('user.product-details');
+
+    //Related Products
+    Route::get('/related-products/{slug}', [FrontendController::class, 'relatedProducts'])->name('user.related-products');
+
+    //Shipping Area
+    Route::get('/shipping-area', [FrontendController::class, 'shippingArea'])->name('user.shipping-area');
+
 });
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -51,7 +58,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/update-profile', [FrontendController::class, 'updateProfile'])->name('api.update.profile');
     Route::get('/user-order-history', [FrontendController::class, 'userOrderHistory'])->name('api.user.order-history');
 
-    //Review store
-    Route::post('/review/store', [FrontendController::class, 'reviewStore'])->name('api.review.store');
+    //Wishlist
+    Route::get('/wishlists', [FrontendController::class, 'wishlist'])->name('user.wishlist');
+    Route::post('/add-to-wishlist', [FrontendController::class, 'addToWishlist'])->name('user.add-to-wishlist');
+    Route::post('/remove-from-wishlist', [FrontendController::class, 'removeFromWishlist'])->name('user.remove-from-wishlist');
 
+    //Cart
+    Route::get('/cart-products', [FrontendController::class, 'cartProducts'])->name('user.cart-products');
+    Route::post('/add-to-cart', [FrontendController::class, 'addToCart'])->name('user.add-to-cart');
+    Route::post('/remove-from-cart', [FrontendController::class, 'removeFromCart'])->name('user.remove-from-cart');
+    Route::post('/clear-cart', [FrontendController::class, 'clearCart'])->name('user.clear-cart');
+    Route::post('/cart-increment', [FrontendController::class, 'cartIncrement'])->name('user.cart-increment');
+    Route::post('/cart-decrement', [FrontendController::class, 'cartDecrement'])->name('user.cart-decrement');
+
+    //Order place
+    Route::post('/order-place', [FrontendController::class, 'orderPlace'])->name('user.place-order');
 });
