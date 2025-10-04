@@ -47,16 +47,21 @@ Route::name('api.')->group(function () {
     //Shipping Area
     Route::get('/shipping-area', [FrontendController::class, 'shippingArea'])->name('user.shipping-area');
 
+    //Testimonials
+    Route::get('/testimonials', [FrontendController::class, 'testimonials'])->name('user.testimonials');
+
 });
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [FrontendController::class, 'userLogout'])->name('api.user.logout');
     Route::post('/confirm-password', [FrontendController::class, 'userConfirmPassword'])->name('api.user.confirm-password');
 
-    //Profile
-    Route::get('/user-profile', [FrontendController::class, 'userProfile'])->name('api.user.profile');
-    Route::post('/update-profile', [FrontendController::class, 'updateProfile'])->name('api.update.profile');
-    Route::get('/user-order-history', [FrontendController::class, 'userOrderHistory'])->name('api.user.order-history');
+    //User Dashboard
+    Route::get('/dashboard-overview', [FrontendController::class, 'dashboardOverview'])->name('user.dashboard-overview');
+    Route::get('/user-profile', [FrontendController::class, 'userProfile'])->name('user.user-profile');
+    Route::get('/user-order-history', [FrontendController::class, 'userOrderHistory'])->name('user.user-order-history');
+    Route::post('/user-settings', [FrontendController::class, 'userSettings'])->name('user.user-settings');
+    Route::post('/user-update-password', [FrontendController::class, 'userUpdatePassword'])->name('user.user-update-password');
 
     //Wishlist
     Route::get('/wishlists', [FrontendController::class, 'wishlist'])->name('user.wishlist');

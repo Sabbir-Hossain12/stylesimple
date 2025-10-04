@@ -38,6 +38,7 @@ class ReviewController extends Controller
             'product_id' => 'required',
             'status' => 'required',
         ]);
+
         $customer = Customer::where('id', $request->customer_id)->first();
         $input = $request->all();
         $input['name'] = $customer->name ? $customer->name : 'N / A';
@@ -47,17 +48,17 @@ class ReviewController extends Controller
         Toastr::success('Success','Data insert successfully');
         return redirect()->route('reviews.index');
     }
-    
+
     public function edit($id)
     {
         $edit_data = Review::find($id);
         $products = Product::where(['status'=>1])->select('id','name')->get();
         return view('backEnd.review.edit',compact('edit_data','products'));
     }
-    
+
     public function update(Request $request)
     {
-        
+
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required',
@@ -73,7 +74,7 @@ class ReviewController extends Controller
         Toastr::success('Success','Data update successfully');
         return redirect()->back();
     }
- 
+
     public function pending(){
         $data = Review::where('status','pending')->get();
         return view('backEnd.review.pending',compact('data'));
@@ -89,7 +90,7 @@ class ReviewController extends Controller
         $active = Review::find($request->hidden_id);
         $active->status = 'active';
         $active->save();
-        
+
 //        $product = Product::select('id','ratting')->find($active->product_id);
 //        $product->ratting += 1;
 //        $product->save();

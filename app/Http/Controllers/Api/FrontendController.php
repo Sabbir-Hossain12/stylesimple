@@ -18,9 +18,11 @@ use App\Models\Productsize;
 use App\Models\Shipping;
 use App\Models\ShippingCharge;
 use App\Models\Subscription;
+use App\Models\Testimonial;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Response;
 use Hash;
 use Auth;
@@ -838,6 +840,141 @@ class FrontendController extends Controller
             'message' => 'Order placed successfully',
             'data' => $order,
         ], 200);
+    }
+
+//    User Dashboard
+    public function dashboardOverview()
+    {
+        $user_id = Auth::user()->id;
+
+        $orders = Order::where('customer_id', $user_id)->count();
+        $wishlist = Wishlist::where('user_id', $user_id)->count();
+        $cart = Cart::where('user_id', $user_id)->count();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Dashboard Overview',
+            'data' => [
+                'orders' => $orders,
+                'wishlist' => $wishlist,
+                'cart' => $cart,
+            ],
+        ], 200);
+    }
+
+    public function userProfile()
+    {
+        $user = Auth::user();
+
+        $customer = Customer::where('id', $user->id)->select('name', 'email', 'phone', 'address','district')->first();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'User Profile',
+            'data' => $customer,
+        ]);
+    }
+
+    public function userOrderHistory()
+    {
+        $user = Auth::user();
+
+        $orders = Order::where('customer_id', $user->id)->with('orderDetails')->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'User Order History',
+            'data' => $orders,
+        ]);
+    }
+
+    public function userSettings(Request $request)
+    {
+        $user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('customers', 'email')->ignore($user->id),
+            ],
+
+            'phone' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('customers', 'phone')->ignore($user->id),
+            ],
+            'address' => 'required|string|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        Customer::where('id', $user->id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'User Settings Updated',
+        ]);
+    }
+
+    public function userUpdatePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'current_password' => 'required|string|min:6',
+            'new_password' => 'required|confirmed|string|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Current password is incorrect',
+            ], 401);
+        }
+
+        // ✅ Update password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Password updated successfully',
+        ]);
+    }
+
+    public function testimonials()
+    {
+        $testimonials = Testimonial::where('status',1)->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Testimonials',
+            'data' => $testimonials,
+        ], 200);
+
+
     }
 
 }
